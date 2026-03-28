@@ -10,6 +10,8 @@
         .header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid var(--a); padding-bottom: 20px; }
         .header h1 { color: var(--a); margin: 0; font-size: 2.5em; }
         .reg-box { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px; }
+        .reg-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 24px; background: rgba(0,0,0,0.25); padding: 16px; border-radius: 12px; border: 1px solid #334155; font-size: 0.95em; line-height: 1.6; }
+        .reg-summary span { color: var(--a); font-weight: bold; }
         input { background: #334155; border: 1px solid #475569; color: white; padding: 12px; border-radius: 8px; outline: none; width: 100%; box-sizing: border-box;}
         .category-title { background: var(--p); color: white; padding: 10px; border-radius: 8px; margin-top: 30px; border-right: 5px solid var(--a); }
         .dict-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; margin-top: 15px; }
@@ -24,91 +26,206 @@
         .quiz-q { margin-bottom: 20px; padding: 15px; border-radius: 10px; background: rgba(0,0,0,0.2); }
         .btn { padding: 15px 30px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; transition: 0.3s; width: 100%; font-size: 1.1em; }
         .btn-check { background: var(--p); color: white; width: auto; margin-top: 10px; }
+        .btn-continue { background: var(--s); color: white; margin-top: 30px; font-size: 1.15em; }
         .btn-final { background: var(--g); color: white; font-size: 1.4em; margin-top: 40px;}
         #finalReport { display: none; background: #064e3b; padding: 30px; border-radius: 15px; border: 2px solid var(--g); text-align: center; margin-top: 40px; }
+        .exam-hint { color: #94a3b8; font-size: 0.95em; line-height: 1.5; margin: 6px 0 22px 0; max-width: 52em; }
+        [hidden] { display: none !important; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="header">
-        <h1>מילון מונחים - קורס מב"ט בסיסי</h1>
-        <p>מילון 96 מונחים | משימות גרירה (40%) | מבחן מסכם (60%)</p>
-    </div>
+    <section id="pageLearn" aria-label="לימוד ומילון">
+        <div class="header">
+            <h1>מילון מונחים - קורס מב"ט בסיסי</h1>
+            <p>מילון 96 מונחים | לאחר מכן: משימות גרירה (40%) | מבחן מסכם (60%)</p>
+        </div>
 
-    <div class="reg-box">
-        <input type="text" id="fn" placeholder="שם פרטי">
-        <input type="text" id="ln" placeholder="שם משפחה">
-        <input type="text" id="uid" placeholder="מספר זהות">
-        <input type="text" id="urole" placeholder="תפקיד">
-    </div>
+        <div class="reg-box">
+            <input type="text" id="fn" placeholder="שם פרטי (עברית בלבד)" autocomplete="given-name" maxlength="40">
+            <input type="text" id="ln" placeholder="שם משפחה (עברית בלבד)" autocomplete="family-name" maxlength="40">
+            <input type="text" id="uid" placeholder="מספר זהות (ספרות בלבד)" inputmode="numeric" autocomplete="off" maxlength="12">
+            <input type="text" id="urole" placeholder="תפקיד" autocomplete="organization-title" maxlength="80">
+        </div>
 
-    <h2 style="color: var(--a);">📚 מילון מונחים (לחץ להסבר)</h2>
-    <div id="dictArea"></div>
+        <h2 style="color: var(--a);">📚 מילון מונחים (לחץ להסבר)</h2>
+        <div id="dictArea"></div>
 
-    <hr style="margin: 40px 0; opacity: 0.2;">
+        <button type="button" class="btn btn-continue" id="btnContinue">המשך למבחן — ללא אפשרות חזרה לעמוד זה</button>
+    </section>
 
-    <h2 style="color: var(--a);">🕵️ משימות גרירה (40%)</h2>
-    
-    <div class="story-box" id="s1">
-        <h3>שלב 1: תשתית ורשתות</h3>
-        נכנסתי למתקן ה-<span class="drop-zone" data-ans="בלמ&quot;ס"></span>. בדקתי את ה-<span class="drop-zone" data-ans="חומרה"></span> הפיזי והפעלתי את ה-<span class="drop-zone" data-ans="PC"></span> המריץ <span class="drop-zone" data-ans="מערכת הפעלה"></span> מסוג <span class="drop-zone" data-ans="Windows"></span>. פתחתי את ה-<span class="drop-zone" data-ans="דפדפן"></span> והזנתי <span class="drop-zone" data-ans="Domain Name"></span> כדי להגיע ל-<span class="drop-zone" data-ans="אתר אינטרנט"></span> הארגוני. החיבור ל-<span class="drop-zone" data-ans="רשת האינטרנט"></span> עבר דרך <span class="drop-zone" data-ans="נתב"></span> ו-<span class="drop-zone" data-ans="מתג"></span> בתוך ה-<span class="drop-zone" data-ans="LAN"></span>.
-        <div class="word-bank" id="b1"></div>
-        <button class="btn btn-check" onclick="checkStory(1, 11)">בדוק שלב 1</button>
-        <span id="sc1" style="font-weight:bold; margin-right:10px; color:var(--g)"></span>
-    </div>
+    <section id="pageExam" hidden aria-label="מבחן">
+        <div class="header">
+            <h1>מבחן הסמכה — מב"ט בסיסי</h1>
+            <p>משימות גרירה (40%) | מבחן מסכם (60%)</p>
+        </div>
 
-    <div class="story-box" id="s2">
-        <h3>שלב 2: אבטחה וסייבר</h3>
-        ה-<span class="drop-zone" data-ans="SOC"></span> זיהה ניסיון <span class="drop-zone" data-ans="דיוג"></span>. השתמשנו ב-<span class="drop-zone" data-ans="Firewall"></span> לסינון וביצענו <span class="drop-zone" data-ans="הלבנה"></span> לקבצים. מערכת <span class="drop-zone" data-ans="DLP"></span> מנעה זליגה. הצוות ביצע <span class="drop-zone" data-ans="פורנזיקה"></span> וזיהה <span class="drop-zone" data-ans="Vulnerability"></span> בתוך <span class="drop-zone" data-ans="תוכנה"></span>.
-        <div class="word-bank" id="b2"></div>
-        <button class="btn btn-check" onclick="checkStory(2, 8)">בדוק שלב 2</button>
-        <span id="sc2" style="font-weight:bold; margin-right:10px; color:var(--g)"></span>
-    </div>
+        <div id="regSummary" class="reg-summary"></div>
 
-    <div class="story-box" id="s3">
-        <h3>שלב 3: OT ובקרה</h3>
-        במתקן ה-<span class="drop-zone" data-ans="OT"></span>, ה-<span class="drop-zone" data-ans="PLC"></span> שולט על המכונות והמידע ב-<span class="drop-zone" data-ans="SCADA"></span>. נטרלנו <span class="drop-zone" data-ans="סטקסנט"></span> בתוך ה-<span class="drop-zone" data-ans="ICS"></span>. וידאנו <span class="drop-zone" data-ans="חתימה דיגיטלית"></span> וניהלנו <span class="drop-zone" data-ans="בקרת מבנה"></span> לפי <span class="drop-zone" data-ans="תקן"></span> מחמיר.
-        <div class="word-bank" id="b3"></div>
-        <button class="btn btn-check" onclick="checkStory(3, 8)">בדוק שלב 3</button>
-        <span id="sc3" style="font-weight:bold; margin-right:10px; color:var(--g)"></span>
-    </div>
+        <h2 style="color: var(--a);">🕵️ משימות גרירה (40%)</h2>
+        <p class="exam-hint">גרור כל מונח מהבנק למטה אל הרווח המקווקו המתאים בטקסט. לאחר שסיימת שלב, לחץ ״בדוק שלב״ כדי לראות ציון לשלב זה.</p>
 
-    <div class="story-box" id="s4">
-        <h3>שלב 4: קשר ואלקטרוניקה</h3>
-        הצוות משתמש ב-<span class="drop-zone" data-ans="תקשורת אלחוטית"></span> ומיקום <span class="drop-zone" data-ans="GPS"></span>. ה-<span class="drop-zone" data-ans="מכ&quot;ם"></span> קולט <span class="drop-zone" data-ans="גלי רדיו"></span>. זיהינו <span class="drop-zone" data-ans="האזנת סתר"></span> והגבנו ב-<span class="drop-zone" data-ans="ל&quot;א"></span>. המידע הועבר ב-<span class="drop-zone" data-ans="טלמטריה"></span> דרך <span class="drop-zone" data-ans="WiFi"></span> וכללו <span class="drop-zone" data-ans="איכון"></span> מדויק.
-        <div class="word-bank" id="b4"></div>
-        <button class="btn btn-check" onclick="checkStory(4, 8)">בדוק שלב 4</button>
-        <span id="sc4" style="font-weight:bold; margin-right:10px; color:var(--g)"></span>
-    </div>
+        <div class="story-box" id="s1">
+            <h3>שלב 1: תשתית ורשתות</h3>
+            נכנסתי למתקן המסווג ברמת <span class="drop-zone" data-ans="בלמ&quot;ס"></span>. ראשית בדקתי את רכיבי ה-<span class="drop-zone" data-ans="חומרה"></span> בעמדות, והפעלתי <span class="drop-zone" data-ans="PC"></span> שמריץ <span class="drop-zone" data-ans="מערכת הפעלה"></span> בשם <span class="drop-zone" data-ans="Windows"></span>. כדי להיכנס לאתר הארגון פתחתי <span class="drop-zone" data-ans="דפדפן"></span>, הקלדתי בכתובת את ה-<span class="drop-zone" data-ans="Domain Name"></span> , והגעתי ל-<span class="drop-zone" data-ans="אתר אינטרנט"></span> הפנימי. החיבור החוצה ל-<span class="drop-zone" data-ans="רשת האינטרנט"></span> עובר אצלנו דרך <span class="drop-zone" data-ans="נתב"></span> שמנתב בין רשתות ו-<span class="drop-zone" data-ans="מתג"></span> שמחבר תחנות בעמדה, והכול בתוך ה-<span class="drop-zone" data-ans="LAN"></span> המקומית של המתקן.
+            <div class="word-bank" id="b1"></div>
+            <button type="button" class="btn btn-check" onclick="checkStory(1, 12)">בדוק שלב 1</button>
+            <span id="sc1" style="font-weight:bold; margin-right:10px; color:var(--g)"></span>
+        </div>
 
-    <h2 style="color: var(--a);">📝 מבחן מסכם (60%)</h2>
-    <div id="quizArea"></div>
+        <div class="story-box" id="s2">
+            <h3>שלב 2: אבטחה וסייבר</h3>
+            בחמ"ל האבטחה, ה-<span class="drop-zone" data-ans="SOC"></span>, התקבלה התראה על ניסיון <span class="drop-zone" data-ans="דיוג"></span> (התחזות לגניבת מידע). הגדרנו את ה-<span class="drop-zone" data-ans="Firewall"></span> לסינון תעבורה חשודה והרצנו <span class="drop-zone" data-ans="הלבנה"></span> על קבצים לפני שמישרים אותם. מערכת <span class="drop-zone" data-ans="DLP"></span> חסמה ניסיון להוציא החוצה מידע רגיש. לאחר האירוע ביצענו <span class="drop-zone" data-ans="פורנזיקה"></span> ומצאנו <span class="drop-zone" data-ans="Vulnerability"></span> (חולשה) ב-<span class="drop-zone" data-ans="תוכנה"></span> מותקנת.
+            <div class="word-bank" id="b2"></div>
+            <button type="button" class="btn btn-check" onclick="checkStory(2, 8)">בדוק שלב 2</button>
+            <span id="sc2" style="font-weight:bold; margin-right:10px; color:var(--g)"></span>
+        </div>
 
-    <button class="btn btn-final" onclick="submitAndSave()">שדר ציון סופי למערכת</button>
+        <div class="story-box" id="s3">
+            <h3>שלב 3: OT ובקרה</h3>
+            בצד התפעולי של המפעל, בטכנולוגיה <span class="drop-zone" data-ans="OT"></span> (תפעולית), ה-<span class="drop-zone" data-ans="PLC"></span> מבצע פקודות בקרה על המכונות, והמפעיל עוקב אחרי המצב במערכת <span class="drop-zone" data-ans="SCADA"></span>. במהלך הבדיקה נטרלנו את נוזקת <span class="drop-zone" data-ans="סטקסנט"></span> שנמצאה ברשת <span class="drop-zone" data-ans="ICS"></span> (בקרה תעשייתית). וידאנו שקיימת <span class="drop-zone" data-ans="חתימה דיגיטלית"></span> תקינה לעדכונים, וניהלנו את מערכות <span class="drop-zone" data-ans="בקרת מבנה"></span> לפי <span class="drop-zone" data-ans="תקן"></span> מחמיר.
+            <div class="word-bank" id="b3"></div>
+            <button type="button" class="btn btn-check" onclick="checkStory(3, 8)">בדוק שלב 3</button>
+            <span id="sc3" style="font-weight:bold; margin-right:10px; color:var(--g)"></span>
+        </div>
 
-    <div id="finalReport">
-        <h2 id="repStatus"></h2>
-        <p id="repText" style="font-size: 1.3em;"></p>
-    </div>
+        <div class="story-box" id="s4">
+            <h3>שלב 4: קשר ואלקטרוניקה</h3>
+            בשטח משתמשים ב-<span class="drop-zone" data-ans="תקשורת אלחוטית"></span> ובמיקום לווייני <span class="drop-zone" data-ans="GPS"></span>. מערכת ה-<span class="drop-zone" data-ans="מכ&quot;ם"></span> שולחת וקולטת <span class="drop-zone" data-ans="גלי רדיו"></span>. זיהינו ניסיון <span class="drop-zone" data-ans="האזנת סתר"></span> לרשתות שלנו והפעלנו אמצעי <span class="drop-zone" data-ans="ל&quot;א"></span> (לוחמה אלקטרונית) להגנה או לשיבוש. מדידות מהשטח נשלחו ב-<span class="drop-zone" data-ans="טלמטריה"></span> דרך רשת <span class="drop-zone" data-ans="WiFi"></span> מקומית, והמידע כלל נתוני <span class="drop-zone" data-ans="איכון"></span> מדויקים.
+            <div class="word-bank" id="b4"></div>
+            <button type="button" class="btn btn-check" onclick="checkStory(4, 8)">בדוק שלב 4</button>
+            <span id="sc4" style="font-weight:bold; margin-right:10px; color:var(--g)"></span>
+        </div>
+
+        <h2 style="color: var(--a);">📝 מבחן מסכם (60%)</h2>
+        <p class="exam-hint">לכל שאלה סמן תשובה אחת בלבד. בסיום כל השאלות לחץ על הכפתור הירוק למטה כדי לשלוח את הציון.</p>
+        <div id="quizArea"></div>
+
+        <button type="button" class="btn btn-final" onclick="submitAndSave()">שדר ציון סופי למערכת</button>
+
+        <div id="finalReport">
+            <h2 id="repStatus"></h2>
+            <p id="repText" style="font-size: 1.3em;"></p>
+        </div>
+    </section>
 </div>
 
 <script>
-    // הגדר כאן את הלינק שקיבלת מגוגל:
+    const STORAGE_REG = 'rayMabatReg';
+    const STORAGE_LOCK = 'rayMabatExamLock';
+
+    // Apps Script Web App URL only — do not put the Google Sheet link here; keep the sheet private in Drive.
     const scriptURL = 'https://script.google.com/macros/s/AKfycbyW7D5yfZL1iJhy4wi-aM4QwYmMi5IXHYxVLleuLc7-XRdPEQZe0vGRZuXXAlZihAUm/exec';
 
     const glossary = [
-        {f: "🌐 תשתיות ו-IT", m: [
-            {t:"בלמ\"ס", d:"בלתי מסווג - מידע גלוי."}, {t:"חומרה", d:"רכיבים פיזיים."}, {t:"PC", d:"מחשב אישי."}, {t:"Windows", d:"מערכת הפעלה."}, {t:"Linux", d:"מערכת הפעלה קוד פתוח."}, {t:"דפדפן", d:"כלי גלישה."}, {t:"LAN", d:"רשת מקומית."}, {t:"WAN", d:"רשת מרחבית."}, {t:"נתב", d:"Router - מקשר רשתות."}, {t:"מתג", d:"Switch - מחבר מכשירים."}, {t:"ענן", d:"מחשוב מרוחק."}, {t:"IP Address", d:"כתובת מזהה ברשת."}, {t:"Domain Name", d:"שם תחום לאתר."}, {t:"בסיס נתונים", d:"אחסון מידע מאורגן."}, {t:"תוכנה", d:"אוסף פקודות למחשב."}, {t:"QA", d:"הבטחת איכות."}, {t:"USB", d:"חיבור חומרה חיצוני."}, {t:"באג", d:"תקלה בקוד."}, {t:"Smartphone", d:"טלפון חכם."}, {t:"UI", d:"ממשק משתמש."}
+        {f: "🖥️ חומרה, תוכנה ומערכות", m: [
+            {t:"טכנולוגיית מידע (IT)", d:"Information Technology — מערכות ותהליכים לעיבוד מידע בארגון."},
+            {t:"מערכת מידע", d:"Information System — חומרה, תוכנה, נתונים ואנשים למטרה משותפת."},
+            {t:"מחשב אישי (PC)", d:"Personal Computer — עמדת עבודה שולחנית או ניידת."},
+            {t:"טלפון חכם (Smartphone)", d:"מכשיר סלולרי עם מערכת הפעלה, אפליקציות וגלישה."},
+            {t:"חומרה (Hardware)", d:"רכיבים פיזיים: מעבד, זיכרון, דיסק, לוח אם, מסך."},
+            {t:"תוכנה (Software)", d:"הוראות ותוכניות שמריצות על החומרה."},
+            {t:"מערכת הפעלה", d:"Operating System — מנהלת משאבים, קבצים והרצת יישומים."},
+            {t:"חלונות (Microsoft Windows)", d:"מערכת הפעלה נפוצה של מיקרוסופט."},
+            {t:"לינוקס (Linux)", d:"משפחת מערכות דמויות-יוניקס; רבות בקוד פתוח."},
+            {t:"דיסק קשיח", d:"Hard Disk — אחסון קבוע (HDD/SSD) לקבצים ולמערכת."},
+            {t:"דיסק און קי", d:"Disk-on-Key — אחסון נייד בחיבור USB."},
+            {t:"USB", d:"Universal Serial Bus — ממשק סטנדרטי להתקנים חיצוניים."},
+            {t:"דפדפן (Internet Browser)", d:"תוכנה לצפייה באתרים וליישומי ווב."},
+            {t:"ממשק משתמש (UI)", d:"User Interface — מה המשתמש רואה ולוחץ על המסך."},
+            {t:"בסיס נתונים (Database)", d:"אחסון מובנה בטבלאות עם שאילתות (למשל SQL)."},
+            {t:"הבטחת איכות (QA)", d:"Quality Assurance — בדיקות ותהליכים לעמידה בדרישות."}
         ]},
-        {f: "🛡️ סייבר ואבטחה", m: [
-            {t:"SOC", d:"חמ\"ל אבטחה."}, {t:"Firewall", d:"חומת אש."}, {t:"דיוג", d:"Phishing - התחזות."}, {t:"הלבנה", d:"ניקוי קבצים CDR."}, {t:"DLP", d:"מניעת זליגת מידע."}, {t:"הצפנה", d:"קידוד מידע."}, {t:"פורנזיקה", d:"חקירה דיגיטלית."}, {t:"Vulnerability", d:"נקודת תורפה."}, {t:"NAC", d:"בקרת גישה לרשת."}, {t:"PT", d:"בדיקת חדירות."}, {t:"הנדסה חברתית", d:"מניפולציה על אנשים."}, {t:"חתימה דיגיטלית", d:"אימות מקוריות."}, {t:"קוד פתוח", d:"תוכנה גלויה לכל."}, {t:"טלאי", d:"Patch - תיקון."}, {t:"הצפנה", d:"Encryption."}
+        {f: "🌐 רשתות ואינטרנט", m: [
+            {t:"מחקר ופיתוח (R&D)", d:"Research & Development — פיתוח טכנולוגיות ומוצרים חדשים."},
+            {t:"תרחיש שימוש (Use Case)", d:"תיאור צעדים טיפוסיים של משתמש להגדרת דרישות."},
+            {t:"אוטומציה (Automation)", d:"ביצוע תהליכים אוטומטית לפי כללים, בלי התערבות ידנית חוזרת."},
+            {t:"דוא\"ל (Email)", d:"הודעות אלקטרוניות; גם ערוץ נפוץ לדיוג."},
+            {t:"אתר אינטרנט (Website)", d:"דפים בכתובת ייחודית (URL) המוצגים בדפדפן."},
+            {t:"רשת מחשבים (Network)", d:"חיבור מחשבים ומכשירים לשיתוף משאבים ומידע."},
+            {t:"רשת מקומית (LAN)", d:"Local Area Network — באותו מבנה או מתקן."},
+            {t:"רשת רחבה (WAN)", d:"Wide Area Network — מחברת סניפים ואתרים מרוחקים."},
+            {t:"רשת האינטרנט (Internet)", d:"רשת עולמית של רשתות המבוססת על IP."},
+            {t:"נתב / ראוטר (Router)", d:"מנתב חבילות בין רשתות שונות."},
+            {t:"לקוח-שרת (Client-Server)", d:"הלקוח מבקש שירות; השרת מספק אותו."},
+            {t:"כתובת IP", d:"IP Address — מזהה מספרי של מכשיר ב-TCP/IP (IPv4/IPv6)."},
+            {t:"שם תחום (Domain Name)", d:"שם קריא (למשל gov.il) שמתורגם ל-IP; משמש בכתובת אתר ודוא\"ל."},
+            {t:"DNS", d:"Domain Name System — מתרגם שם תחום לכתובת IP."},
+            {t:"פרוטוקול (Protocol)", d:"כללים מוסכמים לתקשורת בין מערכות (TCP, HTTP…)."},
+            {t:"מודל TCP/IP", d:"TCP/IP Model — שכבות קו, רשת, תעבורה ויישום; בסיס האינטרנט."}
         ]},
-        {f: "⚙️ OT ובקרה", m: [
-            {t:"OT", d:"טכנולוגיה תפעולית."}, {t:"PLC", d:"בקר לוגי מיתכנת."}, {t:"SCADA", d:"מערכת פיקוד ובקרה."}, {t:"ICS", d:"מערכות בקרה תעשייתית."}, {t:"BMS", d:"בקרת מבנה."}, {t:"סטקסנט", d:"נוזקה לבקרים."}, {t:"חסינות לחבלה", d:"Tamper proofing."}, {t:"שבב", d:"IC - מעגל משולב."}, {t:"שרשרת אספקה", d:"Supply Chain Attack."}, {t:"תקן", d:"Standard."}
+        {f: "☁️ ענן, נתונים, OT", m: [
+            {t:"רשת חברתית (Social Network)", d:"פלטפורמה לפרופילים, תוכן וקשרים בין משתמשים."},
+            {t:"VPN", d:"Virtual Private Network — מנהרה מוצפנת מעל רשת ציבורית."},
+            {t:"ניטור רשת (Network Monitoring)", d:"מעקב אחר תעבורה ואירועים לזיהוי תקלות או תקיפות."},
+            {t:"תעבורה מוצפנת (Encrypted Traffic)", d:"חבילות מוצפנות שרק צדדים מורשים יכולים לקרוא."},
+            {t:"מחשוב ענן (Cloud Computing)", d:"שירותי מחשוב ואחסון מרחוק דרך האינטרנט."},
+            {t:"ביג דאטה (Big Data)", d:"נפחי נתונים עצומים שדורשים כלים מיוחדים לניתוח."},
+            {t:"כריית נתונים (Data Mining)", d:"גילוי דפוסים וידע מתוך מאגרים גדולים."},
+            {t:"מודיעין רשת (WEBINT)", d:"איסוף מידע ממקורות מקוונים פתוחים."},
+            {t:"האינטרנט של הדברים (IoT)", d:"מכשירים חכמים מחוברים לרשת."},
+            {t:"דטה סנטר (Data Center)", d:"מתקן עם שרתים, חשמל, קירור ותקשורת."},
+            {t:"אבטחת ענן (Cloud Security)", d:"הגנה על נתונים וזהות בסביבות ענן."},
+            {t:"טכנולוגיה תפעולית (OT)", d:"Operational Technology — בקרה על תהליכים פיזיים במפעל ותשתיות."},
+            {t:"בקרה תעשייתית (ICS)", d:"Industrial Control Systems — בקרה במפעל ובתשתיות קריטיות."},
+            {t:"מערכות SCADA", d:"SCADA Systems — פיקוח ובקרה מרחוק על תהליכים תעשייתיים."},
+            {t:"בקר לוגי מתוכנת (PLC)", d:"בקר שדה מתוכנת לחיישנים ופלטים."},
+            {t:"סטקסנט (Stuxnet)", d:"נוזקה שכוונה לבקרים תעשייתיים — מקרה לימוד ב-OT."}
         ]},
-        {f: "📡 קשר ואלקטרוניקה", m: [
-            {t:"תקשורת אלחוטית", d:"Wireless."}, {t:"GPS", d:"איכון לווייני."}, {t:"מכ\"ם", d:"RADAR."}, {t:"גלי רדיו", d:"RF."}, {t:"האזנת סתר", d:"ניטור אסור."}, {t:"ל\"א", d:"לוחמה אלקטרונית."}, {t:"טלמטריה", d:"שידור מדידות."}, {t:"WiFi", d:"רשת אלחוטית מקומית."}, {t:"Bluetooth", d:"קשר קרוב."}, {t:"איכון", d:"Localization."}, {t:"סים", d:"SIM."}, {t:"לוויין", d:"ממסר בחלל."}, {t:"אנטנה", d:"רכיב שידור."}, {t:"אלמ\"ג", d:"קרינה אלקטרומגנטית."}
+        {f: "⚔️ איומים ותקיפות", m: [
+            {t:"בלמ\"ס", d:"בלתי מסווג — רמת סיווג נמוכה; מידע שאינו סודי (מופיע גם בתרגילי המבחן)."},
+            {t:"סייבר (Cyber)", d:"תחום המשלב מחשבים, רשתות ומידע — איומים והגנה."},
+            {t:"לוחמת רשת (Cyber Warfare)", d:"שימוש ביכולות דיגיטליות במסגרת עימות בין גופים או מדינות."},
+            {t:"אבטחת מידע (Information Security)", d:"סודיות, שלמות וזמינות של מידע."},
+            {t:"האקר / האקינג (Hacker / Hacking)", d:"חדירה או שימוש במערכות — לגיטימי (מבחן מורשה) או בלתי חוקי."},
+            {t:"נוזקה (Malware)", d:"תוכנה שנועדה לפגוע: וירוס, כופר, סוס טרויאני…"},
+            {t:"קובץ זדוני (Malicious File)", d:"קובץ שמפעיל נוזקה או מנצל פרצה בעת פתיחה."},
+            {t:"תוכנה זדונית לנייד (Mobile Malware)", d:"מכוונת לסמארטפונים וטאבלטים."},
+            {t:"אנטי וירוס (Anti-virus)", d:"זיהוי, חסימה והסרה של נוזקות ידועות."},
+            {t:"דיוג (פישינג) (Phishing)", d:"התחזות כדי לגנוב סיסמה או מידע רגיש."},
+            {t:"פישינג ממוקד (Spear Phishing)", d:"דיוג ממוקד לאדם או תפקיד ספציפי."},
+            {t:"הנדסה חברתית (Social Engineering)", d:"מניפולציה על אנשים כדי לקבל מידע או גישה."},
+            {t:"פרצת אבטחה (Vulnerability / Exploit)", d:"ניצול חולשה להשגת גישה או הרצת קוד."},
+            {t:"פגיעות (Vulnerabilities)", d:"חולשות בתוכנה, חומרה או תצורה שתוקף יכול לנצל."},
+            {t:"התקפת מניעת שירות (DoS)", d:"Denial of Service — הצפה כדי להשבית שירות."},
+            {t:"התקפה מתקדמת (APT)", d:"Advanced Persistent Threat — תוקף מתמשך וממוקד."}
+        ]},
+        {f: "🛡️ הצפנה, זהות והגנה", m: [
+            {t:"פריצה למערכת (System Breach)", d:"חדירה לא מורשית שבה נחשף מידע או שליטה."},
+            {t:"זיהוי חריגות (Anomaly Detection)", d:"זיהוי התנהגות חריגה שעלולה להעיד על תקיפה."},
+            {t:"חומת אש (Firewall)", d:"מסנן תעבורה בין רשתות או בין מחשב לרשת (כולל \"פיירוול\" — אותו מושג)."},
+            {t:"קריפטוגרפיה (Cryptography)", d:"שיטות מתמטיות להסתרה, חתימה ואימות."},
+            {t:"הצפנה (Encryption)", d:"הופכת מידע לקלוע; קריאה רק עם מפתח מתאים."},
+            {t:"הצפנת קצה-לקצה (End-to-End)", d:"רק השולח והמקבל קוראים — לא הספק באמצע."},
+            {t:"הצפנת דיסק (Disk Encryption)", d:"הצפנת כל הכונן."},
+            {t:"הצפנת קבצים (File Encryption)", d:"הצפנת קבצים או תיקיות נבחרים."},
+            {t:"הצפנת אימייל (Email Encryption)", d:"הגנה על תוכן דוא\"ל במעבר ובאחסון."},
+            {t:"חתימה דיגיטלית (Digital Signature)", d:"מוכיחה מקור ושלמות הקובץ."},
+            {t:"סיסמה (Password)", d:"סוד לזיהוי; ארוכה, ייחודית ומוגנת."},
+            {t:"סיסמת חד-פעמית (OTP)", d:"One-Time Password — קוד חד-פעמי לאימות."},
+            {t:"זיהוי ביומטרי (Biometric Authentication)", d:"אימות לפי טביעת אצבע, פנים, קשתית…"},
+            {t:"טוקן (Token)", d:"מחרוזת או מכשיר לגישה זמנית או לאימות בקשה."},
+            {t:"אישור זהות (Authentication)", d:"וידוא זהות המשתמש לפני גישה."},
+            {t:"הרשאות (Authorization)", d:"מה מותר לעשות אחרי האימות — תפקידים ורמות גישה."}
+        ]},
+        {f: "📋 ניהול, תקינות ותקשורת פיזית", m: [
+            {t:"בקרת גישה (Access Control)", d:"מי רשאי לגשת למשאב ומתי."},
+            {t:"מנהל זהויות (Identity Manager)", d:"ניהול מרכזי של חשבונות והרשאות."},
+            {t:"מערך אבטחה (Security Infrastructure)", d:"שילוב מוצרים, תהליכים ואנשים להגנה."},
+            {t:"לוגים (Logs)", d:"רישום אירועים — חיוני לחקירה ולניטור."},
+            {t:"ניהול התקנים (Device Management)", d:"מעקב אחר מכשירים, גרסאות והגדרות."},
+            {t:"ניהול סיכונים (Risk Management)", d:"זיהוי, הערכה וטיפול בסיכונים."},
+            {t:"ניתוח איומים (Threat Analysis)", d:"הבנת תוקפים וכוונות כדי להתכונן."},
+            {t:"ניהול פרצות (Patch Management)", d:"תהליך סדיר לפריסת עדכוני אבטחה."},
+            {t:"טלאי תוכנה (Patch)", d:"עדכון שסוגר חולשה או תקלה בגרסה קיימת."},
+            {t:"בדיקת חדירות (PT)", d:"Penetration Test — התקפה מורשית לאיתור פרצות."},
+            {t:"פורנזיקה דיגיטלית (Digital Forensics)", d:"איסוף וניתוח ראיות אלקטרוניות."},
+            {t:"תקן (Standard)", d:"למשל NIST, ISO — מפרט אחיד לנהלי אבטחה ואיכות."},
+            {t:"Bluetooth", d:"תקשורת אלחוטית קצרת טווח בין מכשירים."},
+            {t:"אנטנה (Antenna)", d:"מעבירה אות חשמלי לגל רדיו ולהפך."},
+            {t:"קרינה אלקטרומגנטית", d:"Electromagnetic Radiation — שדה חשמלי-מגנטי הנושא גלים."},
+            {t:"האזנת סתר", d:"האזנה לתקשורת בלי הסכמה — לרוב אסורה בחוק."}
         ]}
     ];
 
@@ -135,83 +252,265 @@
         {q:"מה זה SCADA?", a:"מערכת פיקוד ובקרה", o:["מערכת פיקוד ובקרה", "סוג של האקר", "פרוטוקול דוא\"ל"]}
     ];
 
-    function init() {
+    let examInitialized = false;
+
+    function examUrlHash() {
+        const base = location.href.split('#')[0];
+        return base + '#exam';
+    }
+
+    function showExamUI() {
+        document.getElementById('pageLearn').hidden = true;
+        document.getElementById('pageExam').hidden = false;
+        fillRegSummary();
+        initExamOnce();
+    }
+
+    function showLearnUI() {
+        document.getElementById('pageLearn').hidden = false;
+        document.getElementById('pageExam').hidden = true;
+    }
+
+    function fillRegSummary() {
+        const raw = sessionStorage.getItem(STORAGE_REG);
+        const el = document.getElementById('regSummary');
+        if (!raw) {
+            el.textContent = '';
+            return;
+        }
+        try {
+            const r = JSON.parse(raw);
+            el.innerHTML =
+                '<div>שם פרטי: <span>' + escapeHtml(r.fn) + '</span></div>' +
+                '<div>שם משפחה: <span>' + escapeHtml(r.ln) + '</span></div>' +
+                '<div>מספר זהות: <span>' + escapeHtml(r.uid) + '</span></div>' +
+                '<div>תפקיד: <span>' + escapeHtml(r.urole || '—') + '</span></div>';
+        } catch (e) {
+            el.textContent = '';
+        }
+    }
+
+    function escapeHtml(s) {
+        if (s == null) return '';
+        return String(s)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+    }
+
+    function shuffleArray(items) {
+        const a = items.slice();
+        for (let j = a.length - 1; j > 0; j--) {
+            const k = Math.floor(Math.random() * (j + 1));
+            const t = a[j];
+            a[j] = a[k];
+            a[k] = t;
+        }
+        return a;
+    }
+
+    function readStoredReg() {
+        const raw = sessionStorage.getItem(STORAGE_REG);
+        if (!raw) return null;
+        try {
+            return JSON.parse(raw);
+        } catch (e) {
+            return null;
+        }
+    }
+
+    /** Hebrew letters, spaces, maqaf, hyphen (for names like בן-ציון), geresh */
+    function isHebrewOnlyName(s) {
+        if (s.length < 2) return false;
+        return /^[\u05D0-\u05EA\u05BE\s'\u05F3-]+$/u.test(s);
+    }
+
+    function isValidIdDigits(s) {
+        return /^\d{5,12}$/.test(s);
+    }
+
+    function validateRegistration(fn, ln, uid, urole) {
+        const errors = [];
+        if (!fn) errors.push('• שם פרטי — שדה חובה');
+        else if (!isHebrewOnlyName(fn)) errors.push('• שם פרטי — רק אותיות בעברית (לפחות 2 תווים), ללא אנגלית או מספרים');
+        if (!ln) errors.push('• שם משפחה — שדה חובה');
+        else if (!isHebrewOnlyName(ln)) errors.push('• שם משפחה — רק אותיות בעברית (לפחות 2 תווים), ללא אנגלית או מספרים');
+        if (!uid) errors.push('• מספר זהות — שדה חובה');
+        else if (!/^\d+$/.test(uid)) errors.push('• מספר זהות — רק ספרות, ללא אותיות או רווחים');
+        else if (!isValidIdDigits(uid)) errors.push('• מספר זהות — בין 5 ל-12 ספרות');
+        if (!urole) errors.push('• תפקיד — שדה חובה');
+        return errors;
+    }
+
+    function goToExam() {
+        const fn = document.getElementById('fn').value.trim();
+        const ln = document.getElementById('ln').value.trim();
+        const uid = document.getElementById('uid').value.trim();
+        const urole = document.getElementById('urole').value.trim();
+        const regErrors = validateRegistration(fn, ln, uid, urole);
+        if (regErrors.length) {
+            alert('נא לתקן את הפרטים:\n\n' + regErrors.join('\n'));
+            return;
+        }
+        sessionStorage.setItem(STORAGE_REG, JSON.stringify({ fn, ln, uid, urole }));
+        sessionStorage.setItem(STORAGE_LOCK, '1');
+        showExamUI();
+        try {
+            history.replaceState({ rayMabatExam: true }, '', examUrlHash());
+        } catch (e) { /* file:// edge cases */ }
+    }
+
+    function initDict() {
         const area = document.getElementById('dictArea');
+        if (!area || area.dataset.ready === '1') return;
+        area.dataset.ready = '1';
         glossary.forEach(cat => {
-            area.innerHTML += `<div class="category-title">${cat.f}</div>`;
+            area.innerHTML += '<div class="category-title">' + cat.f + '</div>';
             const grid = document.createElement('div');
             grid.className = 'dict-grid';
             cat.m.forEach(term => {
-                grid.innerHTML += `<div class="term-card" onclick="this.classList.toggle('open')"><b>${term.t}</b><div class="desc">${term.d}</div></div>`;
+                grid.innerHTML += '<div class="term-card" onclick="this.classList.toggle(\'open\')"><b>' + escapeHtml(term.t) + '</b><div class="desc">' + escapeHtml(term.d) + '</div></div>';
             });
             area.appendChild(grid);
         });
+    }
 
-        for(let i=1; i<=4; i++) {
-            const bank = document.getElementById('b'+i);
-            const zones = document.querySelectorAll(`#s${i} .drop-zone`);
-            let words = Array.from(zones).map(z => z.getAttribute('data-ans'));
+    function initExamOnce() {
+        if (examInitialized) return;
+        examInitialized = true;
+
+        for (let i = 1; i <= 4; i++) {
+            const bank = document.getElementById('b' + i);
+            const zones = document.querySelectorAll('#s' + i + ' .drop-zone');
+            const words = Array.from(zones).map(z => z.getAttribute('data-ans'));
             words.sort(() => Math.random() - 0.5).forEach(w => {
-                const el = document.createElement('div');
-                el.className = 'drag-item'; el.draggable = true; el.innerText = w;
-                el.ondragstart = e => e.dataTransfer.setData("text", w);
-                bank.appendChild(el);
+                const div = document.createElement('div');
+                div.className = 'drag-item';
+                div.draggable = true;
+                div.textContent = w;
+                div.ondragstart = e => e.dataTransfer.setData('text', w);
+                bank.appendChild(div);
             });
         }
 
         document.querySelectorAll('.drop-zone').forEach(z => {
             z.ondragover = e => e.preventDefault();
-            z.ondrop = e => { e.preventDefault(); z.innerText = e.dataTransfer.getData("text"); z.style.color = "#fdbb2d"; };
+            z.ondrop = e => {
+                e.preventDefault();
+                z.textContent = e.dataTransfer.getData('text');
+                z.style.color = '#fdbb2d';
+            };
         });
 
         const qArea = document.getElementById('quizArea');
         quizQs.forEach((q, i) => {
-            qArea.innerHTML += `<div class="quiz-q"><b>${i+1}. ${q.q}</b><br>` + 
-                               q.o.map(o => `<label style="margin-left:20px;"><input type="radio" name="q${i}" value="${o}"> ${o}</label>`).join('') + `</div>`;
+            const opts = shuffleArray(q.o);
+            qArea.innerHTML += '<div class="quiz-q"><b>' + (i + 1) + '. ' + escapeHtml(q.q) + '</b><br>' +
+                opts.map(o => '<label style="margin-left:20px;"><input type="radio" name="q' + i + '" value="' + escapeHtml(o) + '"> ' + escapeHtml(o) + '</label>').join('') + '</div>';
         });
     }
 
-    let sScores = [0,0,0,0];
+    let sScores = [0, 0, 0, 0];
     function checkStory(n, max) {
         let sc = 0;
-        document.querySelectorAll(`#s${n} .drop-zone`).forEach(z => {
-            if(z.innerText.trim() === z.getAttribute('data-ans')) sc++;
+        document.querySelectorAll('#s' + n + ' .drop-zone').forEach(z => {
+            if (z.textContent.trim() === z.getAttribute('data-ans')) sc++;
         });
-        sScores[n-1] = Math.round((sc/max)*100);
-        document.getElementById('sc'+n).innerText = `ציון: ${sScores[n-1]}%`;
+        sScores[n - 1] = Math.round((sc / max) * 100);
+        document.getElementById('sc' + n).textContent = 'ציון: ' + sScores[n - 1] + '%';
     }
 
-    function submitAndSave() {
-        const uFn = document.getElementById('fn').value;
-        const uLn = document.getElementById('ln').value;
-        const uId = document.getElementById('uid').value;
-        if(!uId || uFn.length < 2) return alert("אנא מלא פרטים");
+    async function submitAndSave() {
+        const reg = readStoredReg();
+        const fn = reg ? (reg.fn || '').trim() : '';
+        const ln = reg ? (reg.ln || '').trim() : '';
+        const uid = reg ? (reg.uid || '').trim() : '';
+        const urole = reg ? (reg.urole || '').trim() : '';
+        const regErrors = validateRegistration(fn, ln, uid, urole);
+        if (!reg || regErrors.length) {
+            alert('פרטי הרישום אינם תקינים — רענן את הדף והתחל מחדש');
+            return;
+        }
 
         let qScore = 0;
         quizQs.forEach((q, i) => {
-            const sel = document.querySelector(`input[name="q${i}"]:checked`);
-            if(sel && sel.value === q.a) qScore++;
+            const sel = document.querySelector('input[name="q' + i + '"]:checked');
+            if (sel && sel.value === q.a) qScore++;
         });
         const qPercent = Math.round((qScore / quizQs.length) * 100);
-        const sAvg = Math.round((sScores.reduce((a,b)=>a+b,0) / 4));
+        const sAvg = Math.round((sScores.reduce((a, b) => a + b, 0) / 4));
         const total = Math.round((sAvg * 0.4) + (qPercent * 0.6));
 
-        const dataToSend = { name: uFn + " " + uLn, id: uId, s: sAvg, q: qPercent, t: total };
+        const data = {
+            name: reg.fn.trim() + ' ' + reg.ln.trim(),
+            id: reg.uid.trim(),
+            role: (reg.urole || '').trim(),
+            s: sAvg,
+            q: qPercent,
+            t: total
+        };
 
-        fetch(scriptURL, {
-            method: 'POST',
-            mode: 'no-cors',
-            cache: 'no-cache',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(dataToSend)
-        }).then(() => {
-            document.getElementById('repStatus').innerText = total >= 80 ? "✅ עברת בהצלחה!" : "❌ לא עברת";
-            document.getElementById('repText').innerText = `ציון סופי: ${total}% - הנתונים נשלחו למערכת.`;
-            document.getElementById('finalReport').style.display = 'block';
-        }).catch(err => alert("שגיאה בשליחה: " + err));
+        document.getElementById('repStatus').textContent = 'מעבד...';
+        document.getElementById('finalReport').style.display = 'block';
+
+        try {
+            await fetch(scriptURL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            document.getElementById('repStatus').textContent = total >= 80 ? '✅ עברת בהצלחה!' : '❌ לא עברת';
+            document.getElementById('repText').textContent = 'ציון סופי: ' + total + '% - הנתונים נשלחו.';
+        } catch (e) {
+            alert('שגיאה טכנית, אנא צלם מסך ושלח למנהל');
+        }
     }
 
-    window.onload = init;
+    window.addEventListener('popstate', function () {
+        if (sessionStorage.getItem(STORAGE_LOCK) === '1') {
+            showExamUI();
+            try {
+                if (location.hash !== '#exam') {
+                    history.replaceState({ rayMabatExam: true }, '', examUrlHash());
+                }
+            } catch (e) { /* ignore */ }
+        }
+    });
+
+    window.onload = function () {
+        initDict();
+        document.getElementById('btnContinue').onclick = goToExam;
+
+        const stored = readStoredReg();
+        const storedOk = stored && validateRegistration(
+            (stored.fn || '').trim(),
+            (stored.ln || '').trim(),
+            (stored.uid || '').trim(),
+            (stored.urole || '').trim()
+        ).length === 0;
+
+        if (sessionStorage.getItem(STORAGE_LOCK) === '1' && storedOk) {
+            showExamUI();
+            try {
+                if (location.hash !== '#exam') {
+                    history.replaceState({ rayMabatExam: true }, '', examUrlHash());
+                }
+            } catch (e) { /* ignore */ }
+        } else {
+            if (sessionStorage.getItem(STORAGE_LOCK) === '1' && !storedOk) {
+                sessionStorage.removeItem(STORAGE_LOCK);
+                sessionStorage.removeItem(STORAGE_REG);
+            }
+            if (location.hash === '#exam') {
+                try {
+                    history.replaceState({}, '', location.href.split('#')[0]);
+                } catch (e) { /* ignore */ }
+            }
+            showLearnUI();
+        }
+    };
 </script>
 
 </body>
