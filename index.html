@@ -2,7 +2,7 @@
 <html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>מערכת הסמכה: מנב"ט טכנולוגי 2026</title>
+    <title>מערכת הסמכה: מב"ט בסיסי 2026</title>
     <style>
         :root { --p: #1a2a6c; --s: #b21f1f; --a: #fdbb2d; --g: #27ae60; --bg: #0f172a; --card: #1e293b; --w: #ffffff; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: #e2e8f0; margin: 0; padding: 20px; text-align: right; font-size: 17px; line-height: 1.65; transition: background 0.25s ease, color 0.25s ease; }
@@ -84,14 +84,31 @@
         .practice-action-row { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 12px; margin-top: 8px; }
         .practice-action-row .btn { width: auto; margin-top: 0; }
         .btn-next { justify-self: start; }
-        .btn-random { justify-self: end; }
+        .btn-back-inline { justify-self: end; }
         .btn-placeholder { visibility: hidden; pointer-events: none; }
         .btn-next { background: #1d4ed8; color: #eff6ff; }
         .btn-next:hover { background: #1e40af; }
-        .btn-random { background: #0f766e; color: #ecfeff; }
-        .btn-random:hover { background: #115e59; }
+        .btn-back-inline { background: #334155; color: #f8fafc; }
+        .btn-back-inline:hover { background: #475569; }
         .btn-secondary { background: #334155; color: #f8fafc; width: auto; }
         .btn-secondary:hover { background: #475569; }
+        body[data-device="mobile"] { font-size: 15px; padding: 12px; }
+        body[data-device="mobile"] .container { padding: 16px; border-radius: 14px; }
+        body[data-device="mobile"] .header h1 { font-size: 1.7em; }
+        body[data-device="mobile"] .landing-shell { grid-template-columns: 1fr; gap: 12px; }
+        body[data-device="mobile"] .learn-title { flex-direction: column; align-items: flex-start; }
+        body[data-device="mobile"] .reg-box { grid-template-columns: 1fr; gap: 10px; padding: 14px; }
+        body[data-device="mobile"] .dict-grid { grid-template-columns: 1fr; }
+        body[data-device="mobile"] .practice-action-row { grid-template-columns: 1fr; }
+        body[data-device="mobile"] .btn-next,
+        body[data-device="mobile"] .btn-back-inline { justify-self: stretch; width: 100%; }
+        body[data-device="mobile"] .practice-end-actions { flex-direction: column; }
+        body[data-device="mobile"] .practice-end-actions .btn { width: 100%; }
+        body[data-device="tablet"] { font-size: 16px; }
+        body[data-device="tablet"] .container { padding: 22px; }
+        body[data-device="tablet"] .landing-shell { grid-template-columns: 1fr; }
+        body[data-device="tablet"] .dict-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+        body[data-device="desktop"] .container { max-width: 1240px; }
         @media (max-width: 920px) {
             .landing-shell { grid-template-columns: 1fr; }
             .learn-hero h1 { font-size: 1.8em; }
@@ -106,7 +123,7 @@
         <div class="landing-shell">
             <div class="learn-hero">
                 <span class="learn-badge">MABAT // TRAINING PORTAL</span>
-                <h1>מערכת הסמכה מנב"ט טכנולוגי</h1>
+                <h1>מערכת הסמכה מב"ט בסיסי</h1>
                 <p>לפניך סביבת לימוד ותרגול מעשית: עוברים על מושגי הליבה, ואז מבצעים משימות גרירה ומבחן מסכם בציון משוקלל.</p>
                 <div class="learn-glow"></div>
             </div>
@@ -150,8 +167,8 @@
 
     <section id="pagePractice" hidden aria-label="תרגול מונחים">
         <div class="header">
-            <h1>תרגול מקדים — משחק מונחים</h1>
-            <p>בחר את ההגדרה הנכונה לכל מונח. בכל סבב נבחרים מונחים רנדומליים (עד 30).</p>
+            <h1>מילון מונחים: מב"ט בסיסי</h1>
+            <p>בחר את ההגדרה הנכונה לכל מונח. בכל סבב נבחרים 18 מונחים רנדומליים.</p>
         </div>
 
         <div class="practice-wrap">
@@ -165,10 +182,11 @@
             </div>
             <div class="practice-action-row">
                 <button type="button" class="btn btn-check btn-next btn-placeholder" id="btnNextPractice">שאלה הבאה</button>
-                <button type="button" class="btn btn-check btn-random" id="btnRestartPractice">סבב רנדומלי חדש</button>
+                <button type="button" class="btn btn-back-inline" id="btnBackToLearnTop">חזרה למילון מונחים</button>
             </div>
             <div class="practice-result" id="practiceResult"></div>
             <div class="practice-end-actions" id="practiceEndActions" hidden>
+                <button type="button" class="btn btn-check" id="btnPracticeAgain">כן, סבב תרגול נוסף</button>
                 <button type="button" class="btn btn-secondary" id="btnBackToLearn">חזרה למילון מונחים</button>
                 <button type="button" class="btn btn-continue" id="btnStartExamFromPractice">התחלת מבחן עכשיו</button>
             </div>
@@ -409,6 +427,21 @@
         document.getElementById('pagePractice').hidden = false;
         document.getElementById('pageExam').hidden = true;
         initPracticeRound();
+    }
+
+    function detectDeviceType() {
+        const ua = navigator.userAgent || '';
+        const isTabletUA = /iPad|Tablet|PlayBook|Silk|(Android(?!.*Mobile))/i.test(ua);
+        const isMobileUA = /Mobi|Android|iPhone|iPod|Windows Phone/i.test(ua) && !isTabletUA;
+        const w = window.innerWidth || document.documentElement.clientWidth || 1200;
+        if (isTabletUA || (w >= 768 && w <= 1024)) return 'tablet';
+        if (isMobileUA || w < 768) return 'mobile';
+        return 'desktop';
+    }
+
+    function applyDeviceLayout() {
+        const type = detectDeviceType();
+        document.body.setAttribute('data-device', type);
     }
 
     function fillRegSummary() {
@@ -665,7 +698,7 @@
         document.getElementById('practiceTerm').textContent = 'התרגול הושלם';
         document.getElementById('practiceOptions').innerHTML = '';
         document.getElementById('practiceResult').textContent =
-            'סיימת תרגול: ' + s.correct + ' מתוך ' + s.answered + ' נכונות (' + percent + '%).';
+            'סיימת תרגול: ' + s.correct + ' מתוך ' + s.answered + ' נכונות (' + percent + '%). רוצה להתחיל סבב תרגול נוסף?';
         document.getElementById('btnNextPractice').classList.add('btn-placeholder');
         document.getElementById('practiceEndActions').hidden = false;
         updatePracticeMeta();
@@ -730,11 +763,15 @@
     });
 
     window.onload = function () {
+        applyDeviceLayout();
+        window.addEventListener('resize', applyDeviceLayout);
+        window.addEventListener('orientationchange', applyDeviceLayout);
         initDict();
         document.getElementById('btnPractice').onclick = showPracticeUI;
         document.getElementById('btnContinue').onclick = goToExam;
         document.getElementById('btnNextPractice').onclick = nextPracticeQuestion;
-        document.getElementById('btnRestartPractice').onclick = initPracticeRound;
+        document.getElementById('btnBackToLearnTop').onclick = showLearnUI;
+        document.getElementById('btnPracticeAgain').onclick = initPracticeRound;
         document.getElementById('btnBackToLearn').onclick = showLearnUI;
         document.getElementById('btnStartExamFromPractice').onclick = goToExam;
 
