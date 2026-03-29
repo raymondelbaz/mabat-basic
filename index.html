@@ -5,24 +5,34 @@
     <title>מערכת הסמכה: מנב"ט טכנולוגי 2026</title>
     <style>
         :root { --p: #1a2a6c; --s: #b21f1f; --a: #fdbb2d; --g: #27ae60; --bg: #0f172a; --card: #1e293b; --w: #ffffff; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: #e2e8f0; margin: 0; padding: 20px; text-align: right; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: #e2e8f0; margin: 0; padding: 20px; text-align: right; font-size: 17px; line-height: 1.65; transition: background 0.25s ease, color 0.25s ease; }
         .container { max-width: 1200px; margin: 0 auto; background: rgba(30, 41, 59, 0.8); padding: 30px; border-radius: 20px; box-shadow: 0 0 50px rgba(0,0,0,0.5); border: 1px solid #334155; }
         .header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid var(--a); padding-bottom: 20px; }
-        .header h1 { color: var(--a); margin: 0; font-size: 2.5em; }
+        .header h1 { color: var(--a); margin: 0; font-size: 2.7em; }
         .reg-box { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px; }
         .reg-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 24px; background: rgba(0,0,0,0.25); padding: 16px; border-radius: 12px; border: 1px solid #334155; font-size: 0.95em; line-height: 1.6; }
         .reg-summary span { color: var(--a); font-weight: bold; }
-        input { background: #334155; border: 1px solid #475569; color: white; padding: 12px; border-radius: 8px; outline: none; width: 100%; box-sizing: border-box;}
-        .category-title { background: var(--p); color: white; padding: 10px; border-radius: 8px; margin-top: 30px; border-right: 5px solid var(--a); }
+        input { background: #334155; border: 1px solid #475569; color: white; padding: 13px; border-radius: 8px; outline: none; width: 100%; box-sizing: border-box; font-size: 0.98em;}
+        .category-title {
+            background: linear-gradient(90deg, rgba(30, 64, 175, 0.28), rgba(8, 47, 73, 0.85));
+            color: #dbeafe;
+            padding: 12px 14px;
+            border-radius: 10px;
+            margin-top: 30px;
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            border-right: 5px solid #fbbf24;
+            box-shadow: inset 0 1px 0 rgba(186, 230, 253, 0.18);
+            letter-spacing: 0.01em;
+        }
         .dict-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; margin-top: 15px; }
-        .term-card { background: var(--card); border: 1px solid #334155; padding: 15px; border-radius: 12px; cursor: pointer; text-align: center; transition: 0.3s; position: relative; min-height: 60px; display: flex; align-items: center; justify-content: center; }
+        .term-card { background: var(--card); border: 1px solid #334155; padding: 15px; border-radius: 12px; cursor: pointer; text-align: center; transition: 0.3s; position: relative; min-height: 60px; display: flex; align-items: center; justify-content: center; font-size: 1.02em; }
         .term-card:hover { border-color: var(--a); background: #2d3748; }
         .term-card .desc { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--a); color: #000; padding: 10px; box-sizing: border-box; font-size: 0.85em; font-weight: bold; align-items: center; justify-content: center; border-radius: 11px; z-index: 10; }
         .term-card.open .desc { display: flex; }
         .story-box { background: rgba(255, 255, 255, 0.03); padding: 25px; border-radius: 15px; line-height: 2.8; margin-bottom: 30px; border: 1px solid #334155; }
         .drop-zone { display: inline-block; min-width: 100px; height: 30px; border-bottom: 2px dashed var(--a); vertical-align: middle; margin: 0 5px; text-align: center; }
         .word-bank { background: #1e293b; padding: 15px; border-radius: 10px; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 15px; }
-        .drag-item { background: #e2e8f0; color: #0f172a; padding: 5px 12px; border-radius: 6px; cursor: grab; font-weight: bold; font-size: 0.85em; }
+        .drag-item { background: #e2e8f0; color: #0f172a; padding: 6px 13px; border-radius: 6px; cursor: grab; font-weight: bold; font-size: 0.9em; }
         .quiz-q { margin-bottom: 20px; padding: 15px; border-radius: 10px; background: rgba(0,0,0,0.2); }
         .btn { padding: 15px 30px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; transition: 0.3s; width: 100%; font-size: 1.1em; }
         .btn-check { background: var(--p); color: white; width: auto; margin-top: 10px; }
@@ -30,6 +40,62 @@
         .btn-final { background: var(--g); color: white; font-size: 1.4em; margin-top: 40px;}
         #finalReport { display: none; background: #064e3b; padding: 30px; border-radius: 15px; border: 2px solid var(--g); text-align: center; margin-top: 40px; }
         .exam-hint { color: #94a3b8; font-size: 0.95em; line-height: 1.5; margin: 6px 0 22px 0; max-width: 52em; }
+        .story-hint { color: #cbd5e1; font-size: 0.92em; line-height: 1.5; margin: 8px 0 12px 0; }
+        .landing-shell { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 20px; margin-bottom: 24px; }
+        .learn-hero { position: relative; overflow: hidden; border-radius: 16px; padding: 26px; border: 1px solid #334155; background: radial-gradient(circle at top right, rgba(34,211,238,0.2), rgba(15,23,42,0.95) 45%), linear-gradient(120deg, #0b1220, #1e293b); }
+        .learn-hero h1 { margin: 0; color: #67e8f9; font-size: 2.2em; line-height: 1.1; }
+        .learn-hero p { margin: 12px 0 0; color: #cbd5e1; max-width: 42ch; line-height: 1.7; }
+        .learn-badge { display: inline-block; font-size: 0.78em; letter-spacing: 0.08em; color: #93c5fd; border: 1px solid #1d4ed8; padding: 5px 9px; border-radius: 999px; margin-bottom: 12px; background: rgba(29,78,216,0.15); }
+        .learn-glow { position: absolute; width: 220px; height: 220px; background: rgba(99,102,241,0.28); border-radius: 50%; filter: blur(40px); left: -60px; bottom: -80px; pointer-events: none; }
+        .learn-side { display: grid; gap: 12px; }
+        .stat-card { background: rgba(15,23,42,0.9); border: 1px solid #334155; border-radius: 14px; padding: 15px; }
+        .stat-card b { color: #f8fafc; display: block; margin-bottom: 6px; }
+        .stat-card span { color: #94a3b8; font-size: 0.93em; line-height: 1.5; }
+        .register-panel { background: rgba(15, 23, 42, 0.55); border: 1px solid #334155; border-radius: 16px; padding: 18px; margin-bottom: 26px; box-shadow: inset 0 1px 0 rgba(148,163,184,0.1); }
+        .register-title { margin: 0 0 12px; color: #fbbf24; font-size: 1.1em; }
+        .learn-title { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 0 0 10px; }
+        .learn-title h2 { margin: 0; color: var(--a); }
+        .hint-chip { color: #93c5fd; background: rgba(30,64,175,0.18); border: 1px solid rgba(59,130,246,0.35); padding: 4px 8px; border-radius: 999px; font-size: 0.8em; white-space: nowrap; }
+        .learn-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+        .btn-practice { background: #0e7490; color: #ecfeff; width: auto; }
+        .btn-practice:hover { background: #155e75; }
+        .practice-wrap { background: rgba(255,255,255,0.03); border: 1px solid #334155; border-radius: 16px; padding: 20px; }
+        .practice-top { display: flex; justify-content: space-between; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 12px; }
+        .practice-meta { color: #93c5fd; font-size: 0.9em; }
+        .practice-question { background: rgba(15,23,42,0.55); border: 1px solid #334155; border-radius: 12px; padding: 14px; margin: 12px 0; }
+        .practice-term { color: #f8fafc; font-size: 1.15em; font-weight: 700; margin: 0; }
+        .practice-options { display: grid; gap: 10px; margin: 14px 0; }
+        .practice-option {
+            text-align: right;
+            border: 1px solid #334155;
+            background: #1e293b;
+            color: #e2e8f0;
+            border-radius: 10px;
+            padding: 12px;
+            cursor: pointer;
+            line-height: 1.55;
+            font-size: 0.95em;
+        }
+        .practice-option:hover { border-color: #38bdf8; background: #223048; }
+        .practice-option.correct { border-color: #22c55e; background: #14532d; color: #dcfce7; }
+        .practice-option.wrong { border-color: #f87171; background: #7f1d1d; color: #fee2e2; }
+        .practice-result { margin-top: 12px; color: #86efac; font-weight: 700; }
+        .practice-end-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+        .practice-action-row { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 12px; margin-top: 8px; }
+        .practice-action-row .btn { width: auto; margin-top: 0; }
+        .btn-next { justify-self: start; }
+        .btn-random { justify-self: end; }
+        .btn-placeholder { visibility: hidden; pointer-events: none; }
+        .btn-next { background: #1d4ed8; color: #eff6ff; }
+        .btn-next:hover { background: #1e40af; }
+        .btn-random { background: #0f766e; color: #ecfeff; }
+        .btn-random:hover { background: #115e59; }
+        .btn-secondary { background: #334155; color: #f8fafc; width: auto; }
+        .btn-secondary:hover { background: #475569; }
+        @media (max-width: 920px) {
+            .landing-shell { grid-template-columns: 1fr; }
+            .learn-hero h1 { font-size: 1.8em; }
+        }
         [hidden] { display: none !important; }
     </style>
 </head>
@@ -37,22 +103,76 @@
 
 <div class="container">
     <section id="pageLearn" aria-label="לימוד ומילון">
-        <div class="header">
-            <h1>מילון מונחים - קורס מב"ט בסיסי</h1>
-            <p>מילון 96 מונחים | לאחר מכן: משימות גרירה (40%) | מבחן מסכם (60%)</p>
+        <div class="landing-shell">
+            <div class="learn-hero">
+                <span class="learn-badge">MABAT // TRAINING PORTAL</span>
+                <h1>מערכת הסמכה מנב"ט טכנולוגי</h1>
+                <p>לפניך סביבת לימוד ותרגול מעשית: עוברים על מושגי הליבה, ואז מבצעים משימות גרירה ומבחן מסכם בציון משוקלל.</p>
+                <div class="learn-glow"></div>
+            </div>
+            <div class="learn-side">
+                <div class="stat-card">
+                    <b>96 מונחים מקצועיים</b>
+                    <span>מילון אינטראקטיבי ללחיצה והצגת הסבר קצר לכל מושג.</span>
+                </div>
+                <div class="stat-card">
+                    <b>מסלול בחינה מובנה</b>
+                    <span>תרגילי גרירה מהווים 40% מהציון והמבחן המסכם 60% נוספים.</span>
+                </div>
+                <div class="stat-card">
+                    <b>ללא חזרה אחורה</b>
+                    <span>לאחר מעבר למבחן, הדף ננעל וממשיך ישירות להגשה סופית.</span>
+                </div>
+            </div>
         </div>
 
-        <div class="reg-box">
-            <input type="text" id="fn" placeholder="שם פרטי (עברית בלבד)" autocomplete="given-name" maxlength="40">
-            <input type="text" id="ln" placeholder="שם משפחה (עברית בלבד)" autocomplete="family-name" maxlength="40">
-            <input type="text" id="uid" placeholder="מספר זהות (ספרות בלבד)" inputmode="numeric" autocomplete="off" maxlength="12">
-            <input type="text" id="urole" placeholder="תפקיד" autocomplete="organization-title" maxlength="80">
+        <div class="register-panel">
+            <h3 class="register-title">פרטי נבחן</h3>
+            <div class="reg-box">
+                <input type="text" id="fn" placeholder="שם פרטי (עברית בלבד)" autocomplete="given-name" maxlength="40">
+                <input type="text" id="ln" placeholder="שם משפחה (עברית בלבד)" autocomplete="family-name" maxlength="40">
+                <input type="text" id="uid" placeholder="מספר זהות (ספרות בלבד)" inputmode="numeric" autocomplete="off" maxlength="12">
+                <input type="text" id="urole" placeholder="תפקיד" autocomplete="organization-title" maxlength="80">
+            </div>
         </div>
 
-        <h2 style="color: var(--a);">📚 מילון מונחים (לחץ להסבר)</h2>
+        <div class="learn-title">
+            <h2>📚 מילון מונחים (לחץ להסבר)</h2>
+            <span class="hint-chip">התחל בלמידה לפני המעבר למבחן</span>
+        </div>
         <div id="dictArea"></div>
 
-        <button type="button" class="btn btn-continue" id="btnContinue">המשך למבחן — ללא אפשרות חזרה לעמוד זה</button>
+        <div class="learn-actions">
+            <button type="button" class="btn btn-practice" id="btnPractice">תרגול לפני מבחן — משחק מונחים</button>
+            <button type="button" class="btn btn-continue" id="btnContinue">המשך למבחן — ללא אפשרות חזרה לעמוד זה</button>
+        </div>
+    </section>
+
+    <section id="pagePractice" hidden aria-label="תרגול מונחים">
+        <div class="header">
+            <h1>תרגול מקדים — משחק מונחים</h1>
+            <p>בחר את ההגדרה הנכונה לכל מונח. בכל סבב נבחרים מונחים רנדומליים (עד 30).</p>
+        </div>
+
+        <div class="practice-wrap">
+            <div class="practice-top">
+                <p class="exam-hint">בכל שאלה מוצג מונח אחד ו־4 אפשרויות. בחר את ההגדרה המדויקת והמשך לשאלה הבאה.</p>
+                <div class="practice-meta" id="practiceMeta"></div>
+            </div>
+            <div class="practice-question">
+                <p class="practice-term" id="practiceTerm"></p>
+                <div id="practiceOptions" class="practice-options"></div>
+            </div>
+            <div class="practice-action-row">
+                <button type="button" class="btn btn-check btn-next btn-placeholder" id="btnNextPractice">שאלה הבאה</button>
+                <button type="button" class="btn btn-check btn-random" id="btnRestartPractice">סבב רנדומלי חדש</button>
+            </div>
+            <div class="practice-result" id="practiceResult"></div>
+            <div class="practice-end-actions" id="practiceEndActions" hidden>
+                <button type="button" class="btn btn-secondary" id="btnBackToLearn">חזרה למילון מונחים</button>
+                <button type="button" class="btn btn-continue" id="btnStartExamFromPractice">התחלת מבחן עכשיו</button>
+            </div>
+        </div>
     </section>
 
     <section id="pageExam" hidden aria-label="מבחן">
@@ -68,6 +188,7 @@
 
         <div class="story-box" id="s1">
             <h3>שלב 1: תשתית ורשתות</h3>
+            <p class="story-hint">הנחיה: גרור מונח אחד בכל פעם מבנק המילים שלמטה אל הרווח המקווקו המתאים במשפט. אם טעית, גרור את המונח הנכון מעל הקיים כדי להחליף.</p>
             נכנסתי למתקן המסווג ברמת <span class="drop-zone" data-ans="בלמ&quot;ס"></span>. ראשית בדקתי את רכיבי ה-<span class="drop-zone" data-ans="חומרה"></span> בעמדות, והפעלתי <span class="drop-zone" data-ans="PC"></span> שמריץ <span class="drop-zone" data-ans="מערכת הפעלה"></span> בשם <span class="drop-zone" data-ans="Windows"></span>. כדי להיכנס לאתר הארגון פתחתי <span class="drop-zone" data-ans="דפדפן"></span>, הקלדתי בכתובת את ה-<span class="drop-zone" data-ans="Domain Name"></span> , והגעתי ל-<span class="drop-zone" data-ans="אתר אינטרנט"></span> הפנימי. החיבור החוצה ל-<span class="drop-zone" data-ans="רשת האינטרנט"></span> עובר אצלנו דרך <span class="drop-zone" data-ans="נתב"></span> שמנתב בין רשתות ו-<span class="drop-zone" data-ans="מתג"></span> שמחבר תחנות בעמדה, והכול בתוך ה-<span class="drop-zone" data-ans="LAN"></span> המקומית של המתקן.
             <div class="word-bank" id="b1"></div>
             <button type="button" class="btn btn-check" onclick="checkStory(1, 12)">בדוק שלב 1</button>
@@ -76,6 +197,7 @@
 
         <div class="story-box" id="s2">
             <h3>שלב 2: אבטחה וסייבר</h3>
+            <p class="story-hint">הנחיה: התאם כל מונח מהרשימה לרווח המתאים בתוך הטקסט. המשך עד שכל הרווחים מלאים ורק אחר כך לחץ על ״בדוק שלב 2״.</p>
             בחמ"ל האבטחה, ה-<span class="drop-zone" data-ans="SOC"></span>, התקבלה התראה על ניסיון <span class="drop-zone" data-ans="דיוג"></span> (התחזות לגניבת מידע). הגדרנו את ה-<span class="drop-zone" data-ans="Firewall"></span> לסינון תעבורה חשודה והרצנו <span class="drop-zone" data-ans="הלבנה"></span> על קבצים לפני שמישרים אותם. מערכת <span class="drop-zone" data-ans="DLP"></span> חסמה ניסיון להוציא החוצה מידע רגיש. לאחר האירוע ביצענו <span class="drop-zone" data-ans="פורנזיקה"></span> ומצאנו <span class="drop-zone" data-ans="Vulnerability"></span> (חולשה) ב-<span class="drop-zone" data-ans="תוכנה"></span> מותקנת.
             <div class="word-bank" id="b2"></div>
             <button type="button" class="btn btn-check" onclick="checkStory(2, 8)">בדוק שלב 2</button>
@@ -84,6 +206,7 @@
 
         <div class="story-box" id="s3">
             <h3>שלב 3: OT ובקרה</h3>
+            <p class="story-hint">הנחיה: גרור את המילים מבנק המילים אל המקומות המתאימים בסיפור לפי ההקשר המקצועי. ניתן לשנות תשובה על ידי גרירה מחדש לאותו רווח.</p>
             בצד התפעולי של המפעל, בטכנולוגיה <span class="drop-zone" data-ans="OT"></span> (תפעולית), ה-<span class="drop-zone" data-ans="PLC"></span> מבצע פקודות בקרה על המכונות, והמפעיל עוקב אחרי המצב במערכת <span class="drop-zone" data-ans="SCADA"></span>. במהלך הבדיקה נטרלנו את נוזקת <span class="drop-zone" data-ans="סטקסנט"></span> שנמצאה ברשת <span class="drop-zone" data-ans="ICS"></span> (בקרה תעשייתית). וידאנו שקיימת <span class="drop-zone" data-ans="חתימה דיגיטלית"></span> תקינה לעדכונים, וניהלנו את מערכות <span class="drop-zone" data-ans="בקרת מבנה"></span> לפי <span class="drop-zone" data-ans="תקן"></span> מחמיר.
             <div class="word-bank" id="b3"></div>
             <button type="button" class="btn btn-check" onclick="checkStory(3, 8)">בדוק שלב 3</button>
@@ -92,6 +215,7 @@
 
         <div class="story-box" id="s4">
             <h3>שלב 4: קשר ואלקטרוניקה</h3>
+            <p class="story-hint">הנחיה: מלא את כל הרווחים באמצעות גרירה מהבנק שלמטה אל הרווחים המקווקווים בטקסט. בסיום לחץ על ״בדוק שלב 4״ לקבלת ציון.</p>
             בשטח משתמשים ב-<span class="drop-zone" data-ans="תקשורת אלחוטית"></span> ובמיקום לווייני <span class="drop-zone" data-ans="GPS"></span>. מערכת ה-<span class="drop-zone" data-ans="מכ&quot;ם"></span> שולחת וקולטת <span class="drop-zone" data-ans="גלי רדיו"></span>. זיהינו ניסיון <span class="drop-zone" data-ans="האזנת סתר"></span> לרשתות שלנו והפעלנו אמצעי <span class="drop-zone" data-ans="ל&quot;א"></span> (לוחמה אלקטרונית) להגנה או לשיבוש. מדידות מהשטח נשלחו ב-<span class="drop-zone" data-ans="טלמטריה"></span> דרך רשת <span class="drop-zone" data-ans="WiFi"></span> מקומית, והמידע כלל נתוני <span class="drop-zone" data-ans="איכון"></span> מדויקים.
             <div class="word-bank" id="b4"></div>
             <button type="button" class="btn btn-check" onclick="checkStory(4, 8)">בדוק שלב 4</button>
@@ -253,6 +377,13 @@
     ];
 
     let examInitialized = false;
+    let practiceState = {
+        terms: [],
+        currentIndex: 0,
+        correct: 0,
+        answered: 0,
+        answeredCurrent: false
+    };
 
     function examUrlHash() {
         const base = location.href.split('#')[0];
@@ -261,6 +392,7 @@
 
     function showExamUI() {
         document.getElementById('pageLearn').hidden = true;
+        document.getElementById('pagePractice').hidden = true;
         document.getElementById('pageExam').hidden = false;
         fillRegSummary();
         initExamOnce();
@@ -268,7 +400,15 @@
 
     function showLearnUI() {
         document.getElementById('pageLearn').hidden = false;
+        document.getElementById('pagePractice').hidden = true;
         document.getElementById('pageExam').hidden = true;
+    }
+
+    function showPracticeUI() {
+        document.getElementById('pageLearn').hidden = true;
+        document.getElementById('pagePractice').hidden = false;
+        document.getElementById('pageExam').hidden = true;
+        initPracticeRound();
     }
 
     function fillRegSummary() {
@@ -421,6 +561,116 @@
         document.getElementById('sc' + n).textContent = 'ציון: ' + sScores[n - 1] + '%';
     }
 
+    function allGlossaryTerms() {
+        const out = [];
+        glossary.forEach(cat => cat.m.forEach(term => out.push({ t: term.t, d: term.d })));
+        return out;
+    }
+
+    function randomPracticeTerms() {
+        const all = shuffleArray(allGlossaryTerms());
+        const count = Math.min(18, all.length);
+        return all.slice(0, count);
+    }
+
+    function initPracticeRound() {
+        practiceState = {
+            terms: randomPracticeTerms(),
+            currentIndex: 0,
+            correct: 0,
+            answered: 0,
+            answeredCurrent: false
+        };
+        document.getElementById('practiceResult').textContent = '';
+        document.getElementById('practiceEndActions').hidden = true;
+        document.getElementById('btnNextPractice').classList.add('btn-placeholder');
+        updatePracticeMeta();
+        renderPracticeQuestion();
+    }
+
+    function updatePracticeMeta() {
+        const m = practiceState;
+        document.getElementById('practiceMeta').textContent =
+            'שאלה: ' + Math.min(m.currentIndex + 1, m.terms.length) + '/' + m.terms.length +
+            ' | נכונות: ' + m.correct + ' | נענו: ' + m.answered;
+    }
+
+    function buildPracticeOptions(correctDef) {
+        const defs = shuffleArray(allGlossaryTerms().map(t => t.d).filter(d => d !== correctDef)).slice(0, 3);
+        const options = defs.slice();
+        const insertAt = Math.floor(Math.random() * (options.length + 1));
+        options.splice(insertAt, 0, correctDef);
+        return options;
+    }
+
+    function renderPracticeQuestion() {
+        const s = practiceState;
+        if (s.currentIndex >= s.terms.length) {
+            finishPracticeRound();
+            return;
+        }
+
+        s.answeredCurrent = false;
+        document.getElementById('practiceResult').textContent = '';
+        document.getElementById('btnNextPractice').classList.add('btn-placeholder');
+        const item = s.terms[s.currentIndex];
+        document.getElementById('practiceTerm').textContent = 'מונח: ' + item.t;
+        const optionsWrap = document.getElementById('practiceOptions');
+        optionsWrap.innerHTML = '';
+        buildPracticeOptions(item.d).forEach(opt => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'practice-option';
+            btn.textContent = opt;
+            btn.onclick = function () { onPracticeAnswer(opt, item.d); };
+            optionsWrap.appendChild(btn);
+        });
+        updatePracticeMeta();
+    }
+
+    function onPracticeAnswer(selected, correct) {
+        const s = practiceState;
+        if (s.answeredCurrent) return;
+        s.answeredCurrent = true;
+        s.answered++;
+        const isCorrect = selected === correct;
+        if (isCorrect) s.correct++;
+
+        const optionButtons = Array.from(document.querySelectorAll('#practiceOptions .practice-option'));
+        optionButtons.forEach(btn => {
+            btn.disabled = true;
+            if (btn.textContent === correct) btn.classList.add('correct');
+            else if (btn.textContent === selected && !isCorrect) btn.classList.add('wrong');
+        });
+
+        document.getElementById('practiceResult').textContent = isCorrect
+            ? 'נכון! בחרת את ההגדרה המתאימה.'
+            : 'לא מדויק. ההגדרה הנכונה הודגשה בירוק.';
+        const nextBtn = document.getElementById('btnNextPractice');
+        nextBtn.textContent = (s.currentIndex + 1 >= s.terms.length) ? 'סיום תרגול' : 'שאלה הבאה';
+        nextBtn.classList.remove('btn-placeholder');
+        updatePracticeMeta();
+    }
+
+    function nextPracticeQuestion() {
+        const s = practiceState;
+        if (!s.answeredCurrent) return;
+        s.currentIndex++;
+        renderPracticeQuestion();
+    }
+
+    function finishPracticeRound() {
+        const s = practiceState;
+        const percent = s.answered ? Math.round((s.correct / s.answered) * 100) : 0;
+        document.getElementById('practiceTerm').textContent = 'התרגול הושלם';
+        document.getElementById('practiceOptions').innerHTML = '';
+        document.getElementById('practiceResult').textContent =
+            'סיימת תרגול: ' + s.correct + ' מתוך ' + s.answered + ' נכונות (' + percent + '%).';
+        document.getElementById('btnNextPractice').classList.add('btn-placeholder');
+        document.getElementById('practiceEndActions').hidden = false;
+        updatePracticeMeta();
+    }
+
     async function submitAndSave() {
         const reg = readStoredReg();
         const fn = reg ? (reg.fn || '').trim() : '';
@@ -481,7 +731,12 @@
 
     window.onload = function () {
         initDict();
+        document.getElementById('btnPractice').onclick = showPracticeUI;
         document.getElementById('btnContinue').onclick = goToExam;
+        document.getElementById('btnNextPractice').onclick = nextPracticeQuestion;
+        document.getElementById('btnRestartPractice').onclick = initPracticeRound;
+        document.getElementById('btnBackToLearn').onclick = showLearnUI;
+        document.getElementById('btnStartExamFromPractice').onclick = goToExam;
 
         const stored = readStoredReg();
         const storedOk = stored && validateRegistration(
